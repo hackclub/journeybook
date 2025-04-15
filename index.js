@@ -72,6 +72,7 @@ app.message(/.*/gim, async ({ message }) => {
   var attachment = undefined
   if (message.files && message.files?.length != 0) {
     const privateUrl = message.files[0].permalink_public;
+    return privateUrl;
     const fileId = privateUrl.match(/T0266FRGM-(\w+)-/)[1];
     const pubkey = privateUrl.match(/-(\w+)$/)[1];
     const filename = message.files[0].name;

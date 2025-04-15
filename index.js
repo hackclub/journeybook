@@ -26,6 +26,11 @@ app.message(/.*/gim, async ({ message }) => {
 
 
   if (!response.exists) {
+    await app.client.reactions.remove({
+      channel: message.channel,
+      name: "spin-loading",
+      timestamp: message.ts
+    })
     await app.client.reactions.add({
       channel: message.channel,
       name: "ember-sad",
@@ -43,6 +48,11 @@ app.message(/.*/gim, async ({ message }) => {
     })
   }
   if (!response.has_project) {
+    await app.client.reactions.remove({
+      channel: message.channel,
+      name: "spin-loading",
+      timestamp: message.ts
+    })
     await app.client.reactions.add({
       channel: message.channel,
       name: "ember-sad",

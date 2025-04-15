@@ -13,7 +13,7 @@ app.message(/.*/gim, async ({ message }) => {
   if (message.thread_ts) return;
   await app.client.reactions.add({
     channel: message.channel,
-    name: "spin-loading",
+    name: "lollipopload",
     timestamp: message.ts
   })
   const response = await (await fetch(`https://journey.hackclub.com/api/check_user?` + new URLSearchParams({
@@ -28,7 +28,7 @@ app.message(/.*/gim, async ({ message }) => {
   if (!response.exists) {
     await app.client.reactions.remove({
       channel: message.channel,
-      name: "spin-loading",
+      name: "lollipopload",
       timestamp: message.ts
     })
     await app.client.reactions.add({
@@ -51,7 +51,7 @@ app.message(/.*/gim, async ({ message }) => {
   if (!response.has_project) {
     await app.client.reactions.remove({
       channel: message.channel,
-      name: "spin-loading",
+      name: "lollipopload",
       timestamp: message.ts
     })
     await app.client.reactions.add({
@@ -73,7 +73,7 @@ app.message(/.*/gim, async ({ message }) => {
   if (!message.text) {
     await app.client.reactions.remove({
       channel: message.channel,
-      name: "spin-loading",
+      name: "lollipopload",
       timestamp: message.ts
     })
     await app.client.reactions.add({
@@ -121,7 +121,7 @@ app.message(/.*/gim, async ({ message }) => {
   const responseText = await response2.json(); // will crash if it didn't upload
   await app.client.reactions.remove({
     channel: message.channel,
-    name: "spin-loading",
+    name: "lollipopload",
     timestamp: message.ts
   })
   await app.client.reactions.add({

@@ -94,30 +94,14 @@ app.message(/.*/gim, async ({ message }) => {
   }
   var attachment = undefined
   if (message.files && message.files?.length != 0) {
-    const privateUrl = message.files[0].permalink_public;
-    const mediaUrl = (await (await fetch(privateUrl, {
-      headers: {
-        "Authorization": `Bearer ${process.env.SLACK_USER_TOKEN}`
-      }
-    })).text()).match(/src="([^"]*\.(mp4|jpg|jpeg|png|gif)[^"]*)"/)?.[1];
-    return mediaUrl;
-    const fileId = privateUrl.match(/T0266FRGM-(\w+)-/)[1];
-    const pubkey = privateUrl.match(/-(\w+)$/)[1];
-    const filename = message.files[0].name;
-
-    const publicUrl = `https://files.slack.com/files-pri/T0266FRGM-${fileId}/${filename}?pub_secret=${pubkey}`;
-    const cdnResponse = await (await fetch("https://cdn.hackclub.com/api/v1/new", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer beans',
-        'X-Download-Authorization': `Bearer ${process.env.SLACK_BOT_TOKEN}`
-      },
-      body: JSON.stringify([
-        publicUrl
-      ])
-    })).json()
-    attachment = cdnResponse[0]
+    const fileres = await app.client.files.sharedPublicURL({
+      file: message.files[0].id,
+      token: process.env.SLACK_USER_TOKEN,
+    });
+    const url = (await (await fetch(
+      fileres.file?.permalink_public,
+    )).text()).match(/src="([^"]*\.(mp4|jpg|jpeg|png|gif)[^"]*)"/)?.[1];
+    attachment = url
   }
   const response2 = await fetch(`https://journey.hackclub.com/api/updates`, {
     headers: {

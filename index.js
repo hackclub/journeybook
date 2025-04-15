@@ -47,6 +47,7 @@ app.message(/.*/gim, async ({ message }) => {
       text: "You don't seem to have an account on journey. Make an account at (insert url), then repost this update."
     })
   }
+
   if (!response.has_project) {
     await app.client.reactions.remove({
       channel: message.channel,
@@ -69,10 +70,37 @@ app.message(/.*/gim, async ({ message }) => {
       text: "You don't seem to have a project on journey. Go make a new one, then repost this update."
     })
   }
+  if (!message.text) {
+    await app.client.reactions.remove({
+      channel: message.channel,
+      name: "spin-loading",
+      timestamp: message.ts
+    })
+    await app.client.reactions.add({
+      channel: message.channel,
+      name: "ember-sad",
+      timestamp: message.ts
+    })
+    await app.client.reactions.add({
+      channel: message.channel,
+      name: "exclamation",
+      timestamp: message.ts
+    })
+    return await app.client.chat.postEphemeral({
+      channel: message.channel,
+      user: message.user,
+      text: "You must have text attached"
+    })
+  }
   var attachment = undefined
   if (message.files && message.files?.length != 0) {
     const privateUrl = message.files[0].permalink_public;
-    return privateUrl;
+    const mediaUrl = (await (await fetch(privateUrl, {
+      headers: {
+        "Authorization": `Bearer ${process.env.SLACK_USER_TOKEN}`
+      }
+    })).text()).match(/src="([^"]*\.(mp4|jpg|jpeg|png|gif)[^"]*)"/)?.[1];
+    return mediaUrl;
     const fileId = privateUrl.match(/T0266FRGM-(\w+)-/)[1];
     const pubkey = privateUrl.match(/-(\w+)$/)[1];
     const filename = message.files[0].name;

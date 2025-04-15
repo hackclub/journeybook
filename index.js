@@ -89,11 +89,33 @@ app.message(/.*/gim, async ({ message }) => {
     return await app.client.chat.postEphemeral({
       channel: message.channel,
       user: message.user,
-      text: "You must have text attached"
+      text: "You must have text attached."
     })
   }
   var attachment = undefined
   if (message.files && message.files?.length != 0) {
+    if (message.files.length > 1){
+      await app.client.reactions.remove({
+        channel: message.channel,
+        name: "lollipopload",
+        timestamp: message.ts
+      })
+      await app.client.reactions.add({
+        channel: message.channel,
+        name: "ember-sad",
+        timestamp: message.ts
+      })
+      await app.client.reactions.add({
+        channel: message.channel,
+        name: "exclamation",
+        timestamp: message.ts
+      })
+      return await app.client.chat.postEphemeral({
+        channel: message.channel,
+        user: message.user,
+        text: "You can only have one attachment."
+      })
+    }
     const fileres = await app.client.files.sharedPublicURL({
       file: message.files[0].id,
       token: process.env.SLACK_USER_TOKEN,

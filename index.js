@@ -10,6 +10,7 @@ const app = new App({
 
 app.message(/.*/gim, async ({ message }) => {
   if (!["C08MTLF071T", "C08NHQNG2TS"].includes(message.channel)) return
+  if (message.thread_ts) return;
   await app.client.reactions.add({
     channel: message.channel,
     name: "spin-loading",

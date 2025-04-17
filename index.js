@@ -49,7 +49,7 @@ app.message(/.*/gim, async ({ message }) => {
     return await app.client.chat.postEphemeral({
       channel: message.channel,
       user: message.user,
-      text: "You don't seem to have an account on journey. Make an account at (insert url), then repost this update.",
+      text: "You don't seem to have an account on journey. Make an account at https://journey.hackclub.com, then repost this update.",
     });
   }
 

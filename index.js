@@ -46,7 +46,7 @@ app.message(/.*/gim, async ({ message }) => {
       name: "exclamation",
       timestamp: message.ts,
     });
-    return await app.client.chat.postEphemeral({
+    return await app.client.chat.postMessage({
       channel: message.channel,
       user: message.user,
       text: "You don't seem to have an account on journey. Make an account at https://journey.hackclub.com, then repost this update.",
@@ -70,7 +70,7 @@ app.message(/.*/gim, async ({ message }) => {
       name: "exclamation",
       timestamp: message.ts,
     });
-    return await app.client.chat.postEphemeral({
+    return await app.client.chat.postMessage({
       channel: message.channel,
       user: message.user,
       text: "You don't seem to have a project on journey. Go make a new one, then repost this update.",
@@ -93,7 +93,7 @@ app.message(/.*/gim, async ({ message }) => {
       name: "exclamation",
       timestamp: message.ts,
     });
-    return await app.client.chat.postEphemeral({
+    return await app.client.chat.postMessage({
       channel: message.channel,
       user: message.user,
       text: "You must have text attached.",
@@ -118,7 +118,7 @@ app.message(/.*/gim, async ({ message }) => {
         name: "exclamation",
         timestamp: message.ts,
       });
-      return await app.client.chat.postEphemeral({
+      return await app.client.chat.postMessage({
         channel: message.channel,
         user: message.user,
         text: "You can only have one attachment.",
@@ -174,7 +174,7 @@ app.message(/.*/gim, async ({ message }) => {
       timestamp: message.ts
     });
   }
-  await app.client.chat.postEphemeral({
+  await app.client.chat.postMessage({
     channel: message.channel,
     user: message.user,
     text: "Got your update!",

@@ -163,7 +163,7 @@ app.message(/.*/gim, async ({ message }) => {
       timestamp: message.ts,
     });
   for (const [emoji_key, emoji] of Object.entries(require("./emojis"))) {
-    if (!message.text.toLowercase(emoji_key)) continue;
+    if (!message.text.toLowerCase().includes(emoji_key)) continue;
     await app.client.reactions.add({
       channel: message.channel,
       name: emoji,

@@ -50,6 +50,7 @@ app.message(/.*/gim, async ({ message }) => {
       channel: message.channel,
       user: message.user,
       text: "You don't seem to have an account on journey. Make an account at https://journey.hackclub.com, then repost this update.",
+      thread_ts: message.ts
     });
   }
 
@@ -73,6 +74,7 @@ app.message(/.*/gim, async ({ message }) => {
       channel: message.channel,
       user: message.user,
       text: "You don't seem to have a project on journey. Go make a new one, then repost this update.",
+      thread_ts: message.ts
     });
   }
   if (!message.text) {
@@ -95,6 +97,7 @@ app.message(/.*/gim, async ({ message }) => {
       channel: message.channel,
       user: message.user,
       text: "You must have text attached.",
+      thread_ts: message.ts
     });
   }
   var attachment = undefined;
@@ -119,6 +122,7 @@ app.message(/.*/gim, async ({ message }) => {
         channel: message.channel,
         user: message.user,
         text: "You can only have one attachment.",
+        thread_ts: message.ts
       });
     }
     const fileres = await app.client.files.sharedPublicURL({
@@ -167,13 +171,14 @@ app.message(/.*/gim, async ({ message }) => {
     await app.client.reactions.add({
       channel: message.channel,
       name: emoji,
-      timestamp: message.ts,
+      timestamp: message.ts
     });
   }
   await app.client.chat.postEphemeral({
     channel: message.channel,
     user: message.user,
     text: "Got your update!",
+    thread_ts: message.ts
   });
 });
 

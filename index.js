@@ -149,7 +149,29 @@ app.message(/.*/gim, async ({ message }) => {
       },
     }),
   });
-  const responseText = await response2.json(); // will crash if it didn't upload
+  try { await response2.json();} catch(e){
+    await app.client.reactions.remove({
+      channel: message.channel,
+      name: "lollipopload",
+      timestamp: message.ts,
+    });
+    await app.client.reactions.add({
+      channel: message.channel,
+      name: "ember-sad",
+      timestamp: message.ts,
+    });
+    await app.client.reactions.add({
+      channel: message.channel,
+      name: "exclamation",
+      timestamp: message.ts,
+    });
+    return await app.client.chat.postMessage({
+      channel: message.channel,
+      user: message.user,
+      text: "Welp, something went wrong while uploading to the Journey API. Try again posting it again in 1 minute, then contact a developer.",
+      thread_ts: message.ts
+    });
+  }
   await app.client.reactions.remove({
     channel: message.channel,
     name: "lollipopload",
